@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tag Info Visual</title>
+    <style>
+    .info-box {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        pointer-events: none;
+        z-index: 1000;
+        max-width: 300px;
+    }
+    </style>
+</head>
+
+<body>
+    <h1 class="title">Hello World</h1>
+    <p id="desc">This is a paragraph.</p>
+    <span data-type="custom">Click me!</span>
+
+    <div id="tag-info" class="info-box" style="display: none;"></div>
+
+    <script>
+    const infoBox = document.getElementById("tag-info");
+
+    document.addEventListener("click", (event) => {
+        const el = event.target;
+
+        // 무시할 요소 (예: info 박스 클릭 시)
+        if (el.id === "tag-info") return;
+
+        const tagInfo = {
+            tagName: el.tagName,
+            id: el.id || "none",
+            className: el.className || "none",
+            innerText: el.innerText.slice(0, 100) || "none", // 너무 길면 자르기
+            dataset: JSON.stringify(el.dataset || {}, null, 2)
+        };
+
+        // 화면에 표시
+        infoBox.style.display = "block";
+        infoBox.style.left = `${event.pageX + 10}px`;
+        infoBox.style.top = `${event.pageY + 10}px`;
+
+        infoBox.innerHTML = `
+          <strong>&lt;${tagInfo.tagName.toLowerCase()}&gt;</strong><br>
+          ID: ${tagInfo.id}<br>
+          Class: ${tagInfo.className}<br>
+          Text: ${tagInfo.innerText}<br>
+          Data: <pre style="margin:0">${tagInfo.dataset}</pre>
+        `;
+
+        // 필요 시 main process로도 전달 가능
+        // window.electronAPI.sendTagInfo(tagInfo);
+    });
+
+    // 클릭 외 영역을 누르면 infoBox 숨기기 (선택)
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            infoBox.style.display = "none";
+        }
+    });
+    </script>
+</body>
+
+</html>

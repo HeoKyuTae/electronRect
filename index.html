@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>A4 이미지 + 마우스 좌표(mm)</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      /* 서식 가로 */
+      /*
+      #container {
+          position: relative;
+          width: 1123px;
+          height: 794px;
+      }
+
+      #a4-image {
+          width: 1123px;
+          height: 794px;
+          display: block;
+      }
+          */
+
+      /* 서식 세로 */
+
+      #container {
+        position: relative;
+        width: 794px;
+        height: 1123px;
+      }
+
+      #a4-image {
+        width: 794px;
+        height: 1123px;
+        display: block;
+      }
+
+      #coords {
+        position: absolute;
+        top: 5px;
+        left: 150px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 5px;
+        font-family: monospace;
+      }
+
+      #coords.copied {
+        background: #4caf50;
+        transition: background 0.3s;
+      }
+
+      .pointer-dot {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .pointer-dot.red {
+        background-color: red;
+        /* 첫 번째 점 빨간색 */
+      }
+
+      .pointer-dot.cyan {
+        background-color: cyan;
+        /* 두 번째 점 Cyan색 */
+      }
+
+      .rectangle {
+        position: absolute;
+        border: 2px solid rgba(0, 255, 255, 0.6);
+        /* Cyan색 사각형 */
+        pointer-events: none;
+        z-index: 5;
+      }
+
+      .info-box {
+        position: absolute;
+        background-color: black;
+        color: yellow;
+        font-size: 12px;
+        padding: 6px;
+        border-radius: 5px;
+        font-family: monospace;
+        z-index: 15;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <img id="a4-image" src="assets/별지 제24호 2서식/별지 제24호 2서식001.png" alt="A4 배경 이미지" draggable="false" style="user-select: none; -webkit-user-drag: none" />
+      <div id="coords">X: 0mm, Y: 0mm</div>
+    </div>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
+

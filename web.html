@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Webview Tag Info Viewer</title>
+    <style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: sans-serif;
+    }
+
+    #navbar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 8px 16px;
+        background-color: #f0f0f0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #navbar button {
+        padding: 6px 12px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    #container {
+        height: calc(100% - 50px);
+        /* 상태바 높이 제외 */
+    }
+
+    #external-site {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .info-box {
+        position: fixed;
+        background: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 14px;
+        pointer-events: none;
+        z-index: 9999;
+        max-width: 320px;
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- ✅ 상태바 -->
+    <div id="navbar">
+        <button id="back-btn">⬅ 이전</button>
+        <button id="forward-btn">➡ 다음</button>
+        <button id="reload-btn">🔄 새로고침</button>
+    </div>
+
+    <!-- Webview container -->
+    <div id="container">
+        <webview id="external-site" src="https://www.v2ph.com/actor/Li-Yanxi?hl=ko" preload="webview-preload.js">
+        </webview>
+    </div>
+
+    <!-- Info Box -->
+    <div id="info-box" class="info-box"></div>
+
+    <script>
+    const webview = document.getElementById("external-site");
+    const infoBox = document.getElementById("info-box");
+
+    // 버튼 핸들링
+    document.getElementById("back-btn").onclick = () => {
+        if (webview.canGoBack()) webview.goBack();
+    };
+
+    document.getElementById("forward-btn").onclick = () => {
+        if (webview.canGoForward()) webview.goForward();
+    };
+
+    document.getElementById("reload-btn").onclick = () => {
+        webview.reload();
+    };
+
+    // 태그 클릭 시 정보 표시
+    webview.addEventListener("ipc-message", (event) => {
+        if (event.channel === "tag-info") {
+            const data = event.args[0];
+
+            infoBox.innerHTML = `
+          <strong>&lt;${data.tagName.toLowerCase()}&gt;</strong><br>
+          ID: ${data.id}<br>
+          Class: ${data.className}<br>
+          Text: ${data.text}
+        `;
+
+            infoBox.style.left = data.mouseX + 10 + "px";
+            infoBox.style.top = data.mouseY + 10 + "px";
+            infoBox.style.display = "block";
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            infoBox.style.display = "none";
+        }
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Electron Drag Example</title>
+    <style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    /* 서식 가로 */
+    #container {
+        position: relative;
+        width: 1123px;
+        /* 가로 방향 */
+        height: 794px;
+        /* 가로 방향 */
+    }
+
+    #a4-image {
+        width: 1123px;
+        height: 794px;
+        display: block;
+    }
+
+    /* 서식 세로 */
+    /* #container {
+        position: relative;
+        width: 794px;
+        height: 1123px;
+      }
+
+      #a4-image {
+        width: 794px;
+        height: 1123px;
+        display: block;
+      } */
+
+    #dragCanvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        pointer-events: auto;
+    }
+    </style>
+    <script src="drag_renderer.js" type="module"></script>
+</head>
+
+<body>
+    <div id="container">
+        <img id="a4-image" src="assets/66 Page - [별지 제2호의2서식]/66 Page - [별지 제2호의2서식]-1.png" alt="A4 배경 이미지" />
+        <canvas id="dragCanvas"></canvas>
+    </div>
+</body>
+
+</html>
