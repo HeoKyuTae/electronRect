@@ -1,0 +1,29 @@
+# node modules
+/node_modules/
+
+# 빌드 결과물
+/dist/
+/build/
+/out/
+
+# Electron 패키징 결과
+*.asar
+
+# 로그파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 운영체제 관련
+.DS_Store
+Thumbs.db
+
+# 환경변수, 사용자 설정 등 민감한 정보
+.env
+.env.*
+
+# 캐시 및 기타
+.cache/
+.vscode/
+.idea/
+coverage/
